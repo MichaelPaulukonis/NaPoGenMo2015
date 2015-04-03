@@ -1,0 +1,29 @@
+{
+  "name": "dprk.sloganeering",
+  "version": "0.0.1",
+  "description": "manipulating propoganda to make more progoganda",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:michaelpaulukonis/dprk.sloganeering.git"
+  },
+  "author": "Michael Paulukonis",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/michaelpaulukonis/dprk.sloganeering/issues"
+  },
+  "engines": {
+    "node": "0.12.0"
+  },
+  "dependencies": {
+    "twit": "~1.1.20",
+    "underscore": "~1.8.2"
+  },
+ "devDependencies": {
+    "commander": "~2.7.1",
+    "pos": "~0.1.7-2",
+ },
+}
