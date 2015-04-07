@@ -2,8 +2,6 @@
 // require('child_process').fork('hello.js');
 
 var Spew = require('./lib/tagspewer');
-var lexicon = require('./howl.js');
-var spewer = new Spew(lexicon);
 
 var senttags = require('./tagged.slogans.js');
 var _ = require('underscore');
@@ -30,12 +28,12 @@ var cleanup = function(text) {
 };
 
 
-var howler = function() {
+var howler = function(template, output) {
 
   var howled = [];
   var fs = require('fs');
 
-  fs.readFile('howl.tmpl', 'utf8', function(err, data) {
+  fs.readFile(template, 'utf8', function(err, data) {
 
     if (err) {
       return console.log(err);
@@ -62,11 +60,29 @@ var howler = function() {
 
     });
 
-  fs.writeFile('howled.txt', howled.join('\n'));
+  fs.writeFile(output, howled.join('\n'));
 
   });
 
 };
 
 
-howler();
+
+var program = require('commander');
+program
+  .version('0.0.1')
+  // .option('-t, --templatize', 'pos-tag input file into a template')
+  // .option('-j, --jsonitize', 'create sorted pos-tag file from text')
+  .option('-t, --template [file]', 'input [file]', 'input.txt')
+  .option('-p, --postags [file]', 'pos tag-bag [file]')
+  .option('-o, --output [file]', 'output file', 'out.txt')
+  .parse(process.argv);
+
+if (!process.argv.slice(2).length) {
+  program.outputHelp();
+}
+
+var lexicon = require('./' + program.postags);
+var spewer = new Spew(lexicon);
+
+howler(program.template, program.output);

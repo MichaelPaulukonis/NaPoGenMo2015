@@ -106,6 +106,15 @@ program
   .option('-o, --output [file]', 'output file', 'out.json')
   .parse(process.argv);
 
+if (!process.argv.slice(2).length) {
+  program.outputHelp();
+}
+
 // TODO: it would be nice if these two accepted a default argument
-if (program.templatize) templatize(program.input, program.output);
-if (program.jsonitize) tagjsonitize(program.input, program.output);
+if (program.templatize) {
+  templatize(program.input, program.output);
+}
+
+if (program.jsonitize) {
+  tagjsonitize(program.input, program.output);
+}
