@@ -16,18 +16,15 @@ var coinflip = function(chance) {
 
 var munge = function(line) {
 
-  var asciiA = 97;
-  var asciiZ = 122;
+      if (line.length > 0 && coinflip(config.offsetProbability)) {
+        var variance = random(-config.offsetVariance, config.offsetVariance);
+        // +1, since when you join a 1-length array, you don't get the join-character.
+        var spaceCount = config.offset + variance + 1;
+        var spaces = Array(spaceCount).join(' ');
+        line = spaces + line;
+      }
 
-  if (line.length > 0) {
-    var firstLetter = line.trim().toLowerCase().charCodeAt(0);
-    var offset = ((firstLetter >= asciiA && firstLetter <= asciiZ) ? firstLetter - asciiA : 0);
-
-    var spaces = Array(offset+1).join(' ');
-    line = spaces + line;
-  }
-
-  process.stdout.write(line + '\n');
+    process.stdout.write(line + '\n');
 
 };
 
@@ -40,16 +37,16 @@ process.stdin.setEncoding('utf-8');
 var buffer = '';
 
 process.stdin.on('data', function(data) {
-  var lines = data.split('\n');
+    var lines = data.split('\n');
 
-  lines[0] = buffer + lines[0];
-  buffer = lines[lines.length - 1];
+    lines[0] = buffer + lines[0];
+    buffer = lines[lines.length - 1];
 
-  for (var i = 0; i < lines.length - 1; i++) {
-    munge(lines[i]);
-  }
+    for (var i = 0; i < lines.length - 1; i++) {
+        munge(lines[i]);
+    }
 });
 
 process.stdin.on('end', function() {
-  munge(buffer);
+    munge(buffer);
 });
